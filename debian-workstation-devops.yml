@@ -1,0 +1,173 @@
+---
+# -----------------------------------------------
+# Ansible Playbook
+# Author: Wesley R. Silva <wesley.it@gmail.com>
+# Description: This playbook will setup an 
+# environment with KDE@Debian_8_Testing SO.
+# vim: ft=ansible
+# -----------------------------------------------
+
+- hosts: localhost
+  remote_user: root
+  vars:
+    main_user: "wesley"
+  tasks:
+
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ stretch main contrib non-free' state=present 
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie main contrib non-free' state=present 
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free' state=present 
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free' state=present 
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free' state=present 
+  - apt_repository: repo='deb http://security.debian.org/ jessie/updates contrib main non-free' state=present 
+  - apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present 
+ 
+  - name: Add the i386 Arch to DPKG
+    shell: dpkg --add-architecture i386 && touch /etc/.dpkg-i386 creates=/etc/.dpkg-i386
+
+  - name: Set the right permissions to some dirs
+    file: path={{ item }} owner={{ main_user }} group={{ main_user }} mode=4775
+    with_items:
+      - /opt
+      - /usr/local/src
+      
+  - name: Upgrade all packages
+    apt: upgrade=dist update_cache=yes dpkg_options='force-confold,force-confdef'
+
+  - name: Install (a lot of) useful packages using APT
+    apt: pkg={{ item }} state=present install_recommends=yes
+    with_items:
+      - kde-full
+      - libreoffice
+      - aspell-pt-br
+      - myspell-pt-br
+      - wbrazilian
+      - ibrazilian
+      - hyphen-pt-br
+      - brazilian-conjugate
+      - cowsay
+      - fortune-mod
+      - fortunes-mario
+      - vlc
+      - flashplugin-nonfree-extrasound
+      - gimp
+      - inkscape
+      - vym
+      - vim-nox
+      - emacs24-common
+      - emacsen-common
+      - cryptkeeper
+      - nautilus-dropbox
+      - zenmap
+      - wireshark-gtk
+      - pwgen
+      - curl
+      - wget
+      - qemu-kvm
+      - virt-manager
+      - virtualbox
+      - virtualbox-dkms
+      - virtualbox-guest-additions-iso
+      - vagrant
+      - docker.io
+      - docker-swarm
+      - docker-compose
+      - awscli
+      - python-boto
+      - python3-boto
+      - rbenv
+      - ruby-build
+      - oracle-java8-installer
+      - python-dev
+      - python3-dev
+      - arduino
+      - arduino-mk
+      - git-all
+      - git-flow
+      - elixir
+      - packaging-dev
+      - subversion
+      - libstdc++6:i386
+      - lib32z1
+      - expect
+
+  - name: Get the latest Google Chrome installer
+    get_url: url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" dest=/usr/local/src/chrome.deb
+
+  - name: Install Google Chrome Browser
+    apt: deb="/usr/local/src/chrome.deb"
+
+  - name: Get the latest Slack installer
+    get_url: url="https://downloads.slack-edge.com/linux_releases/slack-desktop-2.0.3-amd64.deb" dest=/usr/local/src/slack.deb
+
+  - name: Install Slack
+    apt: deb="/usr/local/src/slack.deb"
+
+  - name: Get the latest Google Talk Plugin installer
+    get_url: url="https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb" dest=/usr/local/src/hangout.deb
+
+  - name: Install Google Talk Plugin
+    apt: deb="/usr/local/src/hangout.deb"
+
+  - name: Get the latest Skype
+    get_url: url="http://download.skype.com/linux/skype-debian_4.3.0.37-1_i386.deb" dest=/usr/local/src/skype.deb
+
+  - name: Install Skype
+    apt: deb="/usr/local/src/skype.deb"
+
+  - name: Get the latest Teamviewer
+    get_url: url="http://download.teamviewer.com/download/teamviewer_i386.deb" dest=/usr/local/src/teamviewer.deb
+
+  - name: Install Teamviewer
+    apt: deb="/usr/local/src/teamviewer.deb"
+
+  - name: Get the Android Studio 1.5.1
+    get_url: url="https://dl.google.com/dl/android/studio/ide-zips/1.5.1.0/android-studio-ide-141.2456560-linux.zip" dest=/usr/local/src/android-studio.zip
+
+  - name: Install Android Studio
+    unarchive: src=/usr/local/src/android-studio.zip dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-studio
+
+  - name: Get the Android SDK 24.4
+    get_url: url="http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" dest=/usr/local/src/android-sdk.tgz
+
+  - name: Install Android SDK
+    unarchive: src=/usr/local/src/android-sdk.tgz dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-sdk-linux
+
+  - name: Configure the Android environment variables
+    copy: src=android-studio-env.sh dest=/etc/profile.d/ owner={{ main_user }} group={{ main_user }} mode=0755
+
+  - name: Copy the Android SDK Updater script
+    copy: src=update-android-studio.sh dest=/usr/local/bin owner={{ main_user }} group={{ main_user }} mode=0755
+
+  - name: Append user to important groups
+    user: name={{ main_user }} groups=root,docker,vboxusers,kvm append=yes
+
+  - name: Allow the user to run sudo without password
+    lineinfile: dest=/etc/sudoers state=present regexp='^{{ main_user }} ALL\=' line='{{ main_user }} ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
+
+  - name: Ensure the Dropbox folder exists
+    file: path=/home/{{ main_user }}/Dropbox state=directory owner={{ main_user }} group={{ main_user }}
+
+  - name: Ensure the important folder exists inside Dropbox
+    file: path=/home/{{ main_user }}/Dropbox/{{ item }} state=directory owner={{ main_user }} group={{ main_user }}
+    with_items:
+      - Desktop
+      - Documents
+      - Pictures
+      - Videos
+      - Music
+      - Public
+      - Shared
+      - Templates
+
+  - name: Turn important folders on HOME into links to Dropbox
+    file: src=/home/{{ main_user }}/Dropbox/{{ item }} dest=/home/{{ main_user }}/{{ item }} state=link force=yes
+    with_items:
+      - Desktop
+      - Documents
+      - Pictures
+      - Videos
+      - Music
+      - Public
+      - Shared
+      - Templates
+
