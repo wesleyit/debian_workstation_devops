@@ -8,8 +8,9 @@
 # -----------------------------------------------
 
 - hosts: localhost
+  connection: local
   remote_user: root
-  vars:
+  default_vars:
     main_user: "wesley"
   tasks:
 
