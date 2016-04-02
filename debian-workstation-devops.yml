@@ -10,8 +10,6 @@
 - hosts: localhost
   connection: local
   remote_user: root
-  default_vars:
-    main_user: "wesley"
   tasks:
 
   - apt_repository: repo='deb http://ftp.us.debian.org/debian/ stretch main contrib non-free' state=present 
