@@ -9,7 +9,7 @@ apt-get install -y ansible git
 cd "/tmp"
 git clone https://github.com/wesleyit/debian_workstation_devops.git
 cd debian_workstation_devops 
-ansible-playbook debian-workstation-devops.yml --extra-vars "main_user=$CURRENT_USER"
+ansible-playbook -i .ansible-hosts debian-workstation-devops.yml --extra-vars "main_user=$CURRENT_USER"
 EOF
 )
 
