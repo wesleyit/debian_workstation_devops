@@ -6,11 +6,10 @@ CURRENT_USER=$(whoami)
 COMMANDS=$(
 cat << EOF
 apt-get install -y ansible git
-export TMP="$(mktemp -d)"
-cd "$TMP"
-git clone https://github.com/wesleyit/debian_workstation_devops.git .
+cd "/tmp"
+git clone https://github.com/wesleyit/debian_workstation_devops.git
+cd debian_workstation_devops 
 ansible-playbook debian-workstation-devops.yml --extra-vars "main_user=$CURRENT_USER"
-cd /tmp && rm -rf "$TMP"
 EOF
 )
 
