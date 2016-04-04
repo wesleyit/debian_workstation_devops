@@ -6,6 +6,9 @@ CURRENT_USER=$(whoami)
 COMMANDS=$(
 cat << EOF
 apt-get install -y ansible git
+rm -rf /etc/apt/sources*
+mkdir /etc/apt/sources.list.d
+apt-get update
 cd "/tmp"
 git clone https://github.com/wesleyit/debian_workstation_devops.git
 cd debian_workstation_devops 
