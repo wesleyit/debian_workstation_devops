@@ -88,6 +88,7 @@
       - libstdc++6:i386
       - lib32z1
       - expect
+      - terminator
 
   - name: Get the latest Google Chrome installer
     get_url: url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" dest=/usr/local/src/chrome.deb
