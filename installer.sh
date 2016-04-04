@@ -17,7 +17,7 @@ EOF
 )
 
 echo "Lets install Ansible and Git"
-echo -n "Please provide the Root " && su -c "$COMMANDS"
+echo -n "Please provide the Root " && su --login -c "$COMMANDS"
 
 if [ $? -ne 0 ]  
 then
