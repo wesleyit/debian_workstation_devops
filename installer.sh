@@ -43,7 +43,9 @@ echo "Hello! It is time to install some packages.
 It will take a long time, go take a coffee (a long one).
 We will ask you the root password in a few momments..."
 
-su -c "bash -x $TMPFILE"
+echo Debug on
+set -x
+su -c "bash $TMPFILE"
 
 echo "Removing the temporary files..."
 rm -rf "$TMPFILE" /tmp/debian_workstation_devops
