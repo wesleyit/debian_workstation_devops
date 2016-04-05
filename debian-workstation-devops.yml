@@ -187,3 +187,5 @@
   - name: Configure Vim
     shell: cd /home/{{ main_user }}/.devops-vimfiles && bash installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
 
+  - name: Fix ownership to all inside home
+    file: path=/home/{{ main_user }} owner={{ main_user }} group={{ main_user }} recurse=yes
