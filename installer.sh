@@ -6,7 +6,7 @@ CURRENT_USER=$(whoami)
 COMMANDS=$(
 cat << EOF
 apt-get install -y ansible git
-rm -rf /etc/apt/sources*
+[ -e /etc/apt/sources.list ] && rm -rf /etc/apt/sources*
 mkdir /etc/apt/sources.list.d
 apt-get update
 cd "/tmp"
