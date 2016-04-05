@@ -13,22 +13,19 @@ set -x
 
 ## Get rid of the cache and old sources.list files
 rm -rf /etc/apt/sources.list
-rm -rf /etc/apt/sources.list.d
+rm -rf /etc/apt/sources.list.d/*
 rm -rf /var/lib/apt/lists/*
 
 ## Generate a temporary and default sources.list
-echo deb http://ftp.debian.org/debian stretch main contrib non-free > /etc/apt/sources.list
-echo deb http://ftp.debian.org/debian jessie main contrib non-free >> /etc/apt/sources.list
+echo deb http://ftp.us.debian.org/debian/ stretch main contrib non-free > ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie main contrib non-free >> ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free >> ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free >> ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free >> ftp_us_debian_org_debian.list
 
 ## Update cache and install Git and Ansible
 apt-get update
 apt-get install -y ansible git
-
-## Again, get rid of the cache and old sources.list files
-rm -rf /etc/apt/sources.list
-rm -rf /etc/apt/sources.list.d
-rm -rf /var/lib/apt/lists/*
-apt-get update
 
 ## Ensure the repository has the latest code and RUN!
 cd /tmp/
