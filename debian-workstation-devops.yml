@@ -122,19 +122,19 @@
     apt: deb="/usr/local/src/teamviewer.deb"
 
   - name: Get the Android Studio 1.5.1
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     get_url: url="https://dl.google.com/dl/android/studio/ide-zips/1.5.1.0/android-studio-ide-141.2456560-linux.zip" dest=/usr/local/src/android-studio.zip
 
   - name: Install Android Studio
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     unarchive: src=/usr/local/src/android-studio.zip dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-studio
 
   - name: Get the Android SDK 24.4
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     get_url: url="http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" dest=/usr/local/src/android-sdk.tgz
 
   - name: Install Android SDK
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     unarchive: src=/usr/local/src/android-sdk.tgz dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-sdk-linux
 
   - name: Configure the Android environment variables
@@ -150,11 +150,11 @@
     lineinfile: dest=/etc/sudoers state=present regexp='^{{ main_user }} ALL\=' line='{{ main_user }} ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
 
   - name: Ensure the Dropbox folder exists
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     file: path=/home/{{ main_user }}/Dropbox state=directory owner={{ main_user }} group={{ main_user }}
 
   - name: Ensure the important folder exists inside Dropbox
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     file: path=/home/{{ main_user }}/Dropbox/{{ item }} state=directory owner={{ main_user }} group={{ main_user }}
     with_items:
       - Desktop
@@ -167,7 +167,7 @@
       - Templates
 
   - name: Turn important folders on HOME into links to Dropbox
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     file: src=/home/{{ main_user }}/Dropbox/{{ item }} dest=/home/{{ main_user }}/{{ item }} state=link force=yes
     with_items:
       - Desktop
@@ -180,23 +180,23 @@
       - Templates
 
   - name: Get the bash_facilities
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     git: dest=/home/{{ main_user }}/.bash_facilities repo=https://github.com/wesleyit/bash_facilities.git force=yes
 
   - name: Configure the bash rc files with bash_facilities
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     shell: bash /home/{{ main_user }}/.bash_facilities/installer.sh && touch /home/{{ main_user }}/.bash_facilities_installed creates=/home/{{ main_user }}/.bash_facilities_installed
 
   - name: Configure Emacs
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     git: dest=/home/{{ main_user }}/.emacs.d repo=https://github.com/wesleyit/my_org_dot_emacs.git force=yes
 
   - name: Get the Vim config
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     git: dest=/home/{{ main_user }}/.devops-vimfiles repo=https://github.com/wesleyit/vim_devops_dist.git force=yes
 
   - name: Configure Vim
-    sudo_user: "{{ main_user }}"
+    become_user: "{{ main_user }}"
     shell: bash /home/{{ main_user }}/.devops-vimfiles/installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
 
   - name: Fix ownership to all inside home
