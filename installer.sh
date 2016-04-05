@@ -14,7 +14,7 @@ set -x
 ## Get rid of the cache and old sources.list files
 rm -rf /etc/apt/sources.list
 rm -rf /etc/apt/sources.list.d
-rm -rm /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/*
 
 ## Generate a temporary and default sources.list
 echo deb http://ftp.debian.org/debian jessie main contrib non-free > /etc/apt/sources.list
@@ -28,7 +28,7 @@ apt-get install -y ansible git
 ## Again, get rid of the cache and old sources.list files
 rm -rf /etc/apt/sources.list
 rm -rf /etc/apt/sources.list.d
-rm -rm /var/lib/apt/lists/*
+rm -rf /var/lib/apt/lists/*
 apt-get update
 
 ## Ensure the repository has the latest code and RUN!
@@ -43,8 +43,6 @@ echo "Hello! It is time to install some packages.
 It will take a long time, go take a coffee (a long one).
 We will ask you the root password in a few momments..."
 
-echo Debug on
-set -x
 su -c "bash $TMPFILE"
 
 echo "Removing the temporary files..."
