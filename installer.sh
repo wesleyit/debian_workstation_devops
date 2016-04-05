@@ -1,10 +1,12 @@
 #!/bin/bash
 
 ## We need the current user name to setup the tools
-CURRENT_USER=$(whoami)
+export CURRENT_USER=$(whoami)
 
 ## Lets create a temp file to execute our commands
-TMPFILE=$(mktemp)
+export TMPFILE=$(mktemp)
+
+## The heredoc creates an shell script
 cat > "$TMPFILE" << EOF
 #!/bin/bash
 set -x
