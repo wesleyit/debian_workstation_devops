@@ -2,7 +2,7 @@
 # -----------------------------------------------
 # Ansible Playbook
 # Author: Wesley R. Silva <wesley.it@gmail.com>
-# Description: This playbook will setup an 
+# Description: This playbook will setup an
 # environment with KDE@Debian_8_Testing SO.
 # vim: ft=ansible
 # -----------------------------------------------
@@ -12,15 +12,15 @@
   remote_user: root
   tasks:
 
-  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ stretch main contrib non-free' state=present 
-  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie main contrib non-free' state=present 
-  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free' state=present 
-  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free' state=present 
-  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free' state=present 
-  - apt_repository: repo='deb http://security.debian.org/ jessie/updates contrib main non-free' state=present 
-  - apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present 
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ stretch main contrib non-free' state=present
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie main contrib non-free' state=present
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free' state=present
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free' state=present
+  - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free' state=present
+  - apt_repository: repo='deb http://security.debian.org/ jessie/updates contrib main non-free' state=present
+  - apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
   - apt_key: id=EEA14886 url=hkp://keyserver.ubuntu.com:80 state=present
- 
+
   - name: Add the i386 Arch to DPKG
     shell: dpkg --add-architecture i386 && touch /etc/.dpkg-i386 creates=/etc/.dpkg-i386
 
@@ -29,7 +29,7 @@
     with_items:
       - /opt
       - /usr/local/src
-      
+
   - name: Upgrade all packages
     apt: upgrade=dist update_cache=yes dpkg_options='force-confold,force-confdef'
 
@@ -172,12 +172,18 @@
       - Shared
       - Templates
 
+  - name: Get the bash_facilities
+    git: dest=/home/{{ main_user }}/.bash_facilities repo=https://github.com/wesleyit/bash_facilities.git force=yes
+
   - name: Configure the bash rc files with bash_facilities
-    shell: curl https://raw.githubusercontent.com/wesleyit/bash_facilities/master/installer.sh | bash creates=/home/{{ main_user }}/.bash_facilities
+    shell: cd .bash_facilities && bash installer.sh creates=/home/{{ main_user }}/.bash_facilities
 
   - name: Configure Emacs
     git: dest=/home/{{ main_user }}/.emacs.d repo=https://github.com/wesleyit/my_org_dot_emacs.git force=yes
 
+  - name: Get the Vim config
+    git: dest=/home/{{ main_user }}/.devops-vimfiles repo=https://github.com/wesleyit/vim_devops_dist.git force=yes
+
   - name: Configure Vim
-    shell: curl https://raw.githubusercontent.com/wesleyit/vim_devops_dist/master/installer.sh | bash creates=/home/{{ main_user }}/.vim_devops_dist
+    shell: cd .devops-vimfiles && bash installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
 
