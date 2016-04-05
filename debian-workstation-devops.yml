@@ -10,6 +10,8 @@
 - hosts: 127.0.0.1
   connection: local
   remote_user: root
+  become: yes
+  become_method: su
   tasks:
 
   - apt_repository: repo='deb http://ftp.us.debian.org/debian/ stretch main contrib non-free' state=present
@@ -181,11 +183,11 @@
 
   - name: Get the bash_facilities
     become_user: "{{ main_user }}"
-    git: dest=/home/{{ main_user }}/.bash_facilities repo=https://github.com/wesleyit/bash_facilities.git force=yes
+    git: dest=/tmp/bash_facilities repo=https://github.com/wesleyit/bash_facilities.git force=yes
 
   - name: Configure the bash rc files with bash_facilities
     become_user: "{{ main_user }}"
-    shell: bash /home/{{ main_user }}/.bash_facilities/installer.sh && touch /home/{{ main_user }}/.bash_facilities_installed creates=/home/{{ main_user }}/.bash_facilities_installed
+    shell: bash installer.sh && touch installed creates=/home/{{ main_user }}/.bash_facilities/installed chdir=/tmp/bash_facilities/
 
   - name: Configure Emacs
     become_user: "{{ main_user }}"
@@ -197,7 +199,4 @@
 
   - name: Configure Vim
     become_user: "{{ main_user }}"
-    shell: bash /home/{{ main_user }}/.devops-vimfiles/installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
-
-  - name: Fix ownership to all inside home
-    file: path=/home/{{ main_user }} owner={{ main_user }} group={{ main_user }} recurse=yes
+    shell: bash installer.sh creates=/home/{{ main_user }}/.vim_devops_dist chdir=/home/{{ main_user }}/.devops-vimfiles/
