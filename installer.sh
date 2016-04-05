@@ -7,6 +7,7 @@ COMMANDS=$(
 cat << EOF
 apt-get install -y ansible git
 [ -e /etc/apt/sources.list ] && rm -rf /etc/apt/sources*
+[ -e /var/lib/apt ] && rm -rf /var/lib/apt
 mkdir -p /etc/apt/sources.list.d
 apt-get update
 cd "/tmp"
