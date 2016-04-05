@@ -23,7 +23,7 @@ have many goodies:
 - Google Chrome
 - Slack Messenger
 - Skype Messenger
-- Google Hangouts Plugin
+- ~~Google Hangouts Plugin~~ (the Google's repo is down)
 - TeamViewer
 - Android Studio and Android SDK
 - Important folders using Dropbox
@@ -45,4 +45,4 @@ It will take a lot of time because some downloads are very big (Java, Android SD
 The good part is that you can follow the status of each step. Ansible will display the individual results.
 
 At the end, reboot your PC, find Dropbox, make your login and start using your new Workstation :)
-
+ 
