@@ -44,7 +44,7 @@ It will take a long time, go take a coffee (a long one).
 We will ask you the root password in a few momments..."
 
 chmod a+x "$TMPFILE"
-su -c "./$TMPFILE"
+su -c "bash $TMPFILE"
 
 echo "Removing the temporary files..."
 rm -rf "$TMPFILE" /tmp/debian_workstation_devops
