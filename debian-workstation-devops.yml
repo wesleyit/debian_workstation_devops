@@ -176,7 +176,7 @@
     git: dest=/home/{{ main_user }}/.bash_facilities repo=https://github.com/wesleyit/bash_facilities.git force=yes
 
   - name: Configure the bash rc files with bash_facilities
-    shell: cd /home/{{ main_user }}/.bash_facilities && bash installer.sh && touch /home/{{ main_user }}/.bash_facilities_installed creates=/home/{{ main_user }}/.bash_facilities_installed
+    shell: bash /home/{{ main_user }}/.bash_facilities/installer.sh && touch /home/{{ main_user }}/.bash_facilities_installed creates=/home/{{ main_user }}/.bash_facilities_installed
 
   - name: Configure Emacs
     git: dest=/home/{{ main_user }}/.emacs.d repo=https://github.com/wesleyit/my_org_dot_emacs.git force=yes
@@ -185,7 +185,7 @@
     git: dest=/home/{{ main_user }}/.devops-vimfiles repo=https://github.com/wesleyit/vim_devops_dist.git force=yes
 
   - name: Configure Vim
-    shell: cd /home/{{ main_user }}/.devops-vimfiles && bash installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
+    shell: bash /home/{{ main_user }}/.devops-vimfiles/installer.sh creates=/home/{{ main_user }}/.vim_devops_dist
 
   - name: Fix ownership to all inside home
     file: path=/home/{{ main_user }} owner={{ main_user }} group={{ main_user }} recurse=yes
