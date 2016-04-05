@@ -21,7 +21,7 @@
   - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free' state=present
   - apt_repository: repo='deb http://security.debian.org/ jessie/updates contrib main non-free' state=present
   - apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
-  - apt_key: id=EEA14886 url=hkp://keyserver.ubuntu.com:80 state=present
+  - apt_key: id="EEA14886" keyserver="hkp://keyserver.ubuntu.com:80" state=present
 
   - name: Add the i386 Arch to DPKG
     shell: dpkg --add-architecture i386 && touch /etc/.dpkg-i386 creates=/etc/.dpkg-i386
