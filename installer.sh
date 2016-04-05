@@ -18,7 +18,7 @@ rm -rf /var/lib/apt/lists/*
 
 ## Generate a temporary and default sources.list
 echo deb http://ftp.debian.org/debian stretch main contrib non-free > /etc/apt/sources.list
-echo deb http://ftp.debian.org/debian jessie main contrib non-free > /etc/apt/sources.list
+echo deb http://ftp.debian.org/debian jessie main contrib non-free >> /etc/apt/sources.list
 
 ## Update cache and install Git and Ansible
 apt-get update
