@@ -172,3 +172,12 @@
       - Shared
       - Templates
 
+  - name: Configure the bash rc files with bash_facilities
+    shell: curl https://raw.githubusercontent.com/wesleyit/bash_facilities/master/installer.sh | bash creates=/home/{{ main_user }}/.bash_facilities
+
+  - name: Configure Emacs
+    git: dest=/home/{{ main_user }}/.emacs.d repo=https://github.com/wesleyit/my_org_dot_emacs.git force=yes
+
+  - name: Configure Vim
+    shell: curl https://raw.githubusercontent.com/wesleyit/vim_devops_dist/master/installer.sh | bash creates=/home/{{ main_user }}/.vim_devops_dist
+
