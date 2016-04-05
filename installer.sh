@@ -7,11 +7,12 @@ COMMANDS=$(
 cat << EOF
 apt-get install -y ansible git
 [ -e /etc/apt/sources.list ] && rm -rf /etc/apt/sources*
-mkdir /etc/apt/sources.list.d
+mkdir -p /etc/apt/sources.list.d
 apt-get update
 cd "/tmp"
+[ -e debian_workstation_devops ] && rm -rf debian_workstation_devops
 git clone https://github.com/wesleyit/debian_workstation_devops.git
-cd debian_workstation_devops 
+cd debian_workstation_devops
 ansible-playbook -i .ansible-hosts debian-workstation-devops.yml --extra-vars "main_user=$CURRENT_USER"
 EOF
 )
@@ -19,7 +20,7 @@ EOF
 echo "Lets install Ansible and Git"
 echo -n "Please provide the Root " && su --login -c "$COMMANDS"
 
-if [ $? -ne 0 ]  
+if [ $? -ne 0 ]
 then
 	echo "An error occured."
 	exit 1
