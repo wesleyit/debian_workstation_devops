@@ -46,6 +46,6 @@ We will ask you the root password in a few momments..."
 su -c "bash $TMPFILE"
 
 echo "Removing the temporary files..."
-rm -rf "$TMPFILE" /tmp/debian_workstation_devops
+rm -rf "$TMPFILE"
 echo "Done! Please, reboot your computer."
 
