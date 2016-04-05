@@ -17,6 +17,7 @@ rm -rf /etc/apt/sources.list.d/*
 rm -rf /var/lib/apt/lists/*
 
 ## Generate a temporary and default sources.list
+mkdir -p /etc/apt/sources.list.d/
 echo deb http://ftp.us.debian.org/debian/ stretch main contrib non-free > ftp_us_debian_org_debian.list
 echo deb http://ftp.us.debian.org/debian/ jessie main contrib non-free >> ftp_us_debian_org_debian.list
 echo deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free >> ftp_us_debian_org_debian.list
