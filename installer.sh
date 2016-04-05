@@ -18,11 +18,16 @@ rm -rf /var/lib/apt/lists/*
 
 ## Generate a temporary and default sources.list
 mkdir -p /etc/apt/sources.list.d/
-echo deb http://ftp.us.debian.org/debian/ stretch main contrib non-free > ftp_us_debian_org_debian.list
-echo deb http://ftp.us.debian.org/debian/ jessie main contrib non-free >> ftp_us_debian_org_debian.list
-echo deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free >> ftp_us_debian_org_debian.list
-echo deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free >> ftp_us_debian_org_debian.list
-echo deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free >> ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ stretch main contrib non-free > \
+	/etc/apt/sources.list.d/ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie main contrib non-free >> \
+	/etc/apt/sources.list.d/ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ wheezy main contrib non-free >> \
+	/etc/apt/sources.list.d/ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free >> \
+	/etc/apt/sources.list.d/ftp_us_debian_org_debian.list
+echo deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free >> \
+	/etc/apt/sources.list.d/ftp_us_debian_org_debian.list
 
 ## Update cache and install Git and Ansible
 apt-get update
