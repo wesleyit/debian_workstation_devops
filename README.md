@@ -39,7 +39,7 @@ How to install?
 You have just finished setting up your Debian Jessie and have a good Internet connection and CURL.
 Just run: 
 
-`curl https://raw.githubusercontent.com/wesleyit/debian_workstation_devops/master/installer.sh | bash`
+`bash -c "$(curl https://raw.githubusercontent.com/wesleyit/debian_workstation_devops/master/installer.sh)"`
 
 It will take a lot of time because some downloads are very big (Java, Android SDK and Images for example).
 The good part is that you can follow the status of each step. Ansible will display the individual results.
