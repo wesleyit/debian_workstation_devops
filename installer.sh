@@ -1,10 +1,10 @@
 #!/bin/bash
 
 ## We need the current user name to setup the tools
-export CURRENT_USER=$(whoami)
+export CURRENT_USER="$(whoami)"
 
 ## Lets create a temp file to execute our commands
-export TMPFILE=$(mktemp)
+export TMPFILE="$(mktemp)"
 
 ## The heredoc creates an shell script
 cat > "$TMPFILE" << EOF
@@ -43,8 +43,7 @@ echo "Hello! It is time to install some packages.
 It will take a long time, go take a coffee (a long one).
 We will ask you the root password in a few momments..."
 
-chmod a+x "$TMPFILE"
-su -c "bash $TMPFILE"
+su -c "/bin/bash $TMPFILE"
 
 echo "Removing the temporary files..."
 rm -rf "$TMPFILE" /tmp/debian_workstation_devops
