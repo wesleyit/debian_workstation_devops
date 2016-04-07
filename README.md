@@ -10,7 +10,6 @@ have many goodies:
 
 - Debian updated to Testing version 
 - Compatibility with i386 packages
-- A full instalation of KDE
 - LibreOffice
 - Brazilian Portuguese locales
 - Vim and Emacs

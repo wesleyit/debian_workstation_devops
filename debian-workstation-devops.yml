@@ -3,7 +3,7 @@
 # Ansible Playbook
 # Author: Wesley R. Silva <wesley.it@gmail.com>
 # Description: This playbook will setup an
-# environment with KDE@Debian_8_Testing SO.
+# environment with Debian_8_Testing SO.
 # vim: ft=ansible
 # -----------------------------------------------
 
@@ -38,7 +38,6 @@
   - name: Install (a lot of) useful packages using APT
     apt: pkg={{ item }} state=present install_recommends=yes
     with_items:
-      - kde-full
       - libreoffice
       - aspell-pt-br
       - myspell-pt-br
