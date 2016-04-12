@@ -38,7 +38,6 @@
   - name: Install (a lot of) useful packages using APT
     apt: pkg={{ item }} state=present install_recommends=yes
     with_items:
-      - libreoffice
       - aspell-pt-br
       - myspell-pt-br
       - wbrazilian
@@ -50,9 +49,6 @@
       - fortunes-mario
       - vlc
       - flashplugin-nonfree-extrasound
-      - gimp
-      - inkscape
-      - vym
       - vim-nox
       - emacs24-common
       - emacsen-common
@@ -67,7 +63,6 @@
       - virt-manager
       - virtualbox
       - virtualbox-dkms
-      - virtualbox-guest-additions-iso
       - vagrant
       - docker.io
       - docker-swarm
@@ -80,8 +75,6 @@
       - oracle-java8-installer
       - python-dev
       - python3-dev
-      - arduino
-      - arduino-mk
       - git-all
       - git-flow
       - elixir
@@ -117,34 +110,6 @@
 
   - name: Install Skype
     apt: deb="/usr/local/src/skype.deb"
-
-  - name: Get the latest Teamviewer
-    get_url: url="http://download.teamviewer.com/download/teamviewer_i386.deb" dest=/usr/local/src/teamviewer.deb
-
-  - name: Install Teamviewer
-    apt: deb="/usr/local/src/teamviewer.deb"
-
-  - name: Get the Android Studio 1.5.1
-    become_user: "{{ main_user }}"
-    get_url: url="https://dl.google.com/dl/android/studio/ide-zips/1.5.1.0/android-studio-ide-141.2456560-linux.zip" dest=/usr/local/src/android-studio.zip
-
-  - name: Install Android Studio
-    become_user: "{{ main_user }}"
-    unarchive: src=/usr/local/src/android-studio.zip dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-studio
-
-  - name: Get the Android SDK 24.4
-    become_user: "{{ main_user }}"
-    get_url: url="http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz" dest=/usr/local/src/android-sdk.tgz
-
-  - name: Install Android SDK
-    become_user: "{{ main_user }}"
-    unarchive: src=/usr/local/src/android-sdk.tgz dest=/opt owner={{ main_user }} group={{ main_user }} copy=no creates=/opt/android-sdk-linux
-
-  - name: Configure the Android environment variables
-    copy: src=android-studio-env.sh dest=/etc/profile.d/ owner={{ main_user }} group={{ main_user }} mode=0755
-
-  - name: Copy the Android SDK Updater script
-    copy: src=update-android-studio.sh dest=/usr/local/bin owner={{ main_user }} group={{ main_user }} mode=0755
 
   - name: Append user to important groups
     user: name={{ main_user }} groups=root,docker,vboxusers,kvm append=yes
