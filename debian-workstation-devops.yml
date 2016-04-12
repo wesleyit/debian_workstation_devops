@@ -20,11 +20,6 @@
   - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-updates contrib main non-free' state=present
   - apt_repository: repo='deb http://ftp.us.debian.org/debian/ jessie-proposed-updates contrib main non-free' state=present
   - apt_repository: repo='deb http://security.debian.org/ jessie/updates contrib main non-free' state=present
-  - apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
-  - apt_key: id="EEA14886" keyserver="hkp://keyserver.ubuntu.com:80" state=present
-
-  - name: Add the i386 Arch to DPKG
-    shell: dpkg --add-architecture i386 && touch /etc/.dpkg-i386 creates=/etc/.dpkg-i386
 
   - name: Set the right permissions to some dirs
     file: path={{ item }} owner={{ main_user }} group={{ main_user }} mode=4775
@@ -32,18 +27,9 @@
       - /opt
       - /usr/local/src
 
-  - name: Upgrade all packages
-    apt: upgrade=dist update_cache=yes dpkg_options='force-confold,force-confdef'
-
   - name: Install (a lot of) useful packages using APT
     apt: pkg={{ item }} state=present install_recommends=yes
     with_items:
-      - aspell-pt-br
-      - myspell-pt-br
-      - wbrazilian
-      - ibrazilian
-      - hyphen-pt-br
-      - brazilian-conjugate
       - cowsay
       - fortune-mod
       - fortunes-mario
@@ -59,57 +45,17 @@
       - pwgen
       - curl
       - wget
-      - qemu-kvm
-      - virt-manager
-      - virtualbox
-      - virtualbox-dkms
-      - vagrant
       - docker.io
-      - docker-swarm
-      - docker-compose
       - awscli
       - python-boto
       - python3-boto
       - rbenv
       - ruby-build
-      - oracle-java8-installer
       - python-dev
       - python3-dev
       - git-all
-      - git-flow
-      - elixir
       - packaging-dev
       - subversion
-      - libstdc++6:i386
-      - lib32z1
-      - expect
-      - terminator
-
-  - name: Get the latest Google Chrome installer
-    get_url: url="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" dest=/usr/local/src/chrome.deb
-
-  - name: Install Google Chrome Browser
-    apt: deb="/usr/local/src/chrome.deb"
-
-  - name: Get the latest Slack installer
-    get_url: url="https://downloads.slack-edge.com/linux_releases/slack-desktop-2.0.3-amd64.deb" dest=/usr/local/src/slack.deb
-
-  - name: Install Slack
-    apt: deb="/usr/local/src/slack.deb"
-
-    # There is a problem in Google's Repository
-    #  - name: Get the latest Google Talk Plugin installer
-    #    get_url: url="https://dl.google.com/linux/direct/google-talkplugin_current_amd64.deb" dest=/usr/local/src/hangout.deb
-
-    # There is a problem in Google's Repository
-    #  - name: Install Google Talk Plugin
-    #    apt: deb="/usr/local/src/hangout.deb"
-
-  - name: Get the latest Skype
-    get_url: url="http://download.skype.com/linux/skype-debian_4.3.0.37-1_i386.deb" dest=/usr/local/src/skype.deb
-
-  - name: Install Skype
-    apt: deb="/usr/local/src/skype.deb"
 
   - name: Append user to important groups
     user: name={{ main_user }} groups=root,docker,vboxusers,kvm append=yes
